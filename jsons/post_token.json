@@ -1,0 +1,9 @@
+{
+  "status": 200,
+  "url": "serverest/login",
+  "body": {
+    "email": "fulano@qa.com",
+    "password": "teste"
+  },
+  "save":[{"path": "authorization", "as": "token"}]
+}

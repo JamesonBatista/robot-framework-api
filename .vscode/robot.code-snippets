@@ -1,0 +1,52 @@
+{
+
+	"Generate Request": {
+		"prefix": ".req",
+		"body": [
+			"\\${response}    Request    ../jsons/get    True$1"
+		],
+		"description": "generate Request"
+	},
+	"Generate GET_VARIABLE": {
+		"prefix": ".variable",
+		"body": [
+			"\\${name}=    GET_VARIABLE_GLOBAL    first_name$1"
+		],
+		"description": "generate get variable"
+	},
+	"Generate json change": {
+		"prefix": ".json",
+		"body": [
+			"\\${json}=    JSON_CHANGE    ../jsons/post    body    {'name': '${faker_name}'}$1"
+		],
+		"description": "generate json change"
+	},
+	"Generate status code": {
+		"prefix": ".status",
+		"body": [
+			"STATUS_CODE    \\${response}    status    200$2$1"
+		],
+		"description": "generate status code"
+	},
+	"Generate init test": {
+		"prefix": ".test",
+		"body": [
+			"*** Settings ***",
+			"Resource    ../Resources/resources_keywords.robot",
+			"Library    FakerLibrary    locale=pt_BR",
+			"*** Variables ***",
+			"",
+			"*** Test Cases ***",
+			"Test init",
+			"    \\${response}    Request    ../jsons/get    True$1"
+		],
+		"description": "generate init test complete"
+	},
+	"Generate Save": {
+		"prefix": ".save",
+		"body": [
+			"    Save    path    $value"
+		],
+		"description": "generate get variable"
+	}
+}

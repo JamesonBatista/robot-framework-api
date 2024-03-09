@@ -1,0 +1,2023 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0 (Python 3.8.2 on darwin)" generated="2024-03-08T16:47:57.649926" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="/Users/usuario/Documents/robot-framework/tests">
+<suite id="s1-s1" name="Requests" source="/Users/usuario/Documents/robot-framework/tests/requests.robot">
+<test id="s1-s1-t1" name="Test init" line="7">
+<kw name="Request" owner="resources_keywords">
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Load JSON Data" owner="resources_keywords">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2024-03-08T16:47:58.527173" level="INFO" html="true">Getting file '&lt;a href="file:///Users/usuario/Documents/robot-framework/jsons/post_token.json"&gt;/Users/usuario/Documents/robot-framework/jsons/post_token.json&lt;/a&gt;'.</msg>
+<msg time="2024-03-08T16:47:58.527521" level="INFO">${json_content} = {
+  "status": 200,
+  "url": "serverest/login",
+  "body": {
+    "email": "fulano@qa.com",
+    "password": "teste"
+  },
+  "save":[{"path": "authorization", "as": "token"}]
+}
+</msg>
+<var>${json_content}</var>
+<arg>${json_file_path}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.526699" elapsed="0.000875"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:58.528423" level="INFO">${json_data} = {'status': 200, 'url': 'serverest/login', 'body': {'email': 'fulano@qa.com', 'password': 'teste'}, 'save': [{'path': 'authorization', 'as': 'token'}]}</msg>
+<var>${json_data}</var>
+<arg>json.loads("""${json_content}""")</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.527895" elapsed="0.000574"/>
+</kw>
+<return>
+<value>${json_data}</value>
+<status status="PASS" start="2024-03-08T16:47:58.528589" elapsed="0.000089"/>
+</return>
+<arg>${json}.json</arg>
+<status status="PASS" start="2024-03-08T16:47:58.525980" elapsed="0.003024"/>
+</kw>
+<msg time="2024-03-08T16:47:58.529188" level="INFO">${json_data} = {'status': 200, 'url': 'serverest/login', 'body': {'email': 'fulano@qa.com', 'password': 'teste'}, 'save': [{'path': 'authorization', 'as': 'token'}]}</msg>
+<var>${json_data}</var>
+<arg>'${json.__class__.__name__}' == 'str'</arg>
+<arg>Load JSON Data</arg>
+<arg>${json}.json</arg>
+<arg>ELSE</arg>
+<arg>Set Variable</arg>
+<arg>${json}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.524350" elapsed="0.004883"/>
+</kw>
+<kw name="Process URL" owner="keywords_requests">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:58.532586" level="INFO">${final_url} = serverest/login</msg>
+<var>${final_url}</var>
+<arg>${url}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.532145" elapsed="0.000499"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Not Start With" owner="BuiltIn">
+<arg>${url}</arg>
+<arg>http</arg>
+<doc>Fails if the string ``str1`` starts with the string ``str2``.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.533255" elapsed="0.000263"/>
+</kw>
+<msg time="2024-03-08T16:47:58.533685" level="INFO">${protocol_not_http} = True</msg>
+<var>${protocol_not_http}</var>
+<arg>Should Not Start With</arg>
+<arg>${url}</arg>
+<arg>http</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.532921" elapsed="0.000805"/>
+</kw>
+<if>
+<branch type="IF" condition="${protocol_not_http}">
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${url}</arg>
+<arg>/</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.534627" elapsed="0.000369"/>
+</kw>
+<msg time="2024-03-08T16:47:58.535178" level="INFO">${contains_slash} = True</msg>
+<var>${contains_slash}</var>
+<arg>Should Contain</arg>
+<arg>${url}</arg>
+<arg>/</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.534243" elapsed="0.000979"/>
+</kw>
+<if>
+<branch type="IF" condition="${contains_slash}">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:58.536467" level="INFO">${parts} = ['serverest', 'login']</msg>
+<var>${parts}</var>
+<arg>'${url}'.split('/')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.535829" elapsed="0.000698"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:58.537271" level="INFO">${endpoint} = serverest</msg>
+<var>${endpoint}</var>
+<arg>${parts}[0]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.536856" elapsed="0.000459"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:58.538015" level="INFO">${path} = login</msg>
+<var>${path}</var>
+<arg>'/'.join(${parts}[1:])</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.537565" elapsed="0.000495"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:58.535420" elapsed="0.002720"/>
+</branch>
+<branch type="ELSE">
+<kw name="Set Variable" owner="BuiltIn">
+<var>${endpoint}</var>
+<arg>${url}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.538443" elapsed="0.000036"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${path}</var>
+<arg>${EMPTY}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.538703" elapsed="0.000034"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:58.538199" elapsed="0.000607"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:58.535382" elapsed="0.003470"/>
+</if>
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2024-03-08T16:47:58.539549" level="INFO" html="true">Getting file '&lt;a href="file:///Users/usuario/Documents/robot-framework/config/env.json"&gt;/Users/usuario/Documents/robot-framework/config/env.json&lt;/a&gt;'.</msg>
+<msg time="2024-03-08T16:47:58.539855" level="INFO">${file_content} = {
+	"env": "QA",
+	"QA": {
+	  "users": "https://reqres.in/api/users/2",
+	  "restcountries": "https://restcountries.com/v3.1/translation/germany",
+	  "users_base":"https://reqres.in/api/users",
+	  "serve...</msg>
+<var>${file_content}</var>
+<arg>${file_path}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.539088" elapsed="0.000859"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:58.541117" level="INFO">${json_data} = {'env': 'QA', 'QA': {'users': 'https://reqres.in/api/users/2', 'restcountries': 'https://restcountries.com/v3.1/translation/germany', 'users_base': 'https://reqres.in/api/users', 'serverest': 'https:/...</msg>
+<var>${json_data}</var>
+<arg>json.loads("""${file_content}""")</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.540488" elapsed="0.000689"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:58.542248" level="INFO">${env} = QA</msg>
+<var>${env}</var>
+<arg>${json_data}</arg>
+<arg>env</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.541467" elapsed="0.000826"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:58.543017" level="INFO">${env_data} = {'users': 'https://reqres.in/api/users/2', 'restcountries': 'https://restcountries.com/v3.1/translation/germany', 'users_base': 'https://reqres.in/api/users', 'serverest': 'https://serverest.dev', 'bo...</msg>
+<var>${env_data}</var>
+<arg>${json_data}</arg>
+<arg>${env}</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.542552" elapsed="0.000616"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:58.543971" level="INFO">${endpoint_value} = https://serverest.dev</msg>
+<var>${endpoint_value}</var>
+<arg>${env_data}</arg>
+<arg>${endpoint}</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.543483" elapsed="0.000534"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:58.544767" level="INFO">${final_endpoint} = https://serverest.dev</msg>
+<var>${final_endpoint}</var>
+<arg>'${endpoint_value}' != '${None}'</arg>
+<arg>${endpoint_value}</arg>
+<arg>${endpoint}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.544301" elapsed="0.000508"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:58.546415" level="INFO">${final_url} = https://serverest.dev/login</msg>
+<var>${final_url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${final_endpoint}/${path}</arg>
+<arg>${final_endpoint}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.545055" elapsed="0.001416"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:58.533922" elapsed="0.012642"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:58.533873" elapsed="0.012748"/>
+</if>
+<return>
+<value>${final_url}</value>
+<status status="PASS" start="2024-03-08T16:47:58.546701" elapsed="0.000057"/>
+</return>
+<msg time="2024-03-08T16:47:58.547087" level="INFO">${url_endpoint} = https://serverest.dev/login</msg>
+<var>${url_endpoint}</var>
+<arg>${json_data["url"]}</arg>
+<status status="PASS" start="2024-03-08T16:47:58.530220" elapsed="0.016926"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-08T16:47:58.548219" level="INFO">False</msg>
+<msg time="2024-03-08T16:47:58.548375" level="FAIL">Dictionary does not contain key 'path'.</msg>
+<arg>${json_data}</arg>
+<arg>path</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="FAIL" start="2024-03-08T16:47:58.547903" elapsed="0.000619">Dictionary does not contain key 'path'.</status>
+</kw>
+<msg time="2024-03-08T16:47:58.548772" level="INFO">${path_string} = False</msg>
+<var>${path_string}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json_data}</arg>
+<arg>path</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.547535" elapsed="0.001295"/>
+</kw>
+<if>
+<branch type="IF" condition="${path_string}">
+<kw name="Set Variable" owner="BuiltIn">
+<var>${variable_name}</var>
+<arg>${json_data["path"]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.549444" elapsed="0.000047"/>
+</kw>
+<kw name="Get Variable Value" owner="BuiltIn">
+<var>${value_found}</var>
+<arg>${${variable_name}}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.549892" elapsed="0.000045"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${url_endpoint}</var>
+<arg>${url_endpoint}/${value_found[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.550237" elapsed="0.000037"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:58.549041" elapsed="0.001303"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:58.548990" elapsed="0.001403"/>
+</if>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n\n 🔰 request in: ${url_endpoint}\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.550617" elapsed="0.000468"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-08T16:47:58.551953" level="INFO">False</msg>
+<msg time="2024-03-08T16:47:58.552116" level="FAIL">Dictionary does not contain key 'replace'.</msg>
+<arg>${json_data}</arg>
+<arg>replace</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="FAIL" start="2024-03-08T16:47:58.551648" elapsed="0.000607">Dictionary does not contain key 'replace'.</status>
+</kw>
+<msg time="2024-03-08T16:47:58.552483" level="INFO">${path_replace} = False</msg>
+<var>${path_replace}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json_data}</arg>
+<arg>replace</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.551342" elapsed="0.001197"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:58.553094" level="INFO">${data} = False</msg>
+<var>${data}</var>
+<arg>False</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.552855" elapsed="0.000280"/>
+</kw>
+<if>
+<branch type="IF" condition="${path_replace}">
+<kw name="Set Variable" owner="BuiltIn">
+<var>${path_value_replace}</var>
+<arg>${json_data['replace']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.553580" elapsed="0.000033"/>
+</kw>
+<kw name="Split String" owner="String">
+<var>${itens}</var>
+<arg>${path_value_replace}</arg>
+<arg>,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.553834" elapsed="0.000033"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Strip String" owner="String">
+<var>${trim_value}</var>
+<arg>${replace_val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.554552" elapsed="0.000037"/>
+</kw>
+<kw name="Get Variable Value" owner="BuiltIn">
+<var>@{value_found}</var>
+<arg>${${trim_value}}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.554830" elapsed="0.000033"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${value_found}</var>
+<arg>$value_found[0] if isinstance($value_found, list) and len($value_found) &gt; 0 else $value_found</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.555088" elapsed="0.000032"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${is_list}</var>
+<arg>isinstance($value_found, list)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.555441" elapsed="0.000035"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<var>${value_found}</var>
+<arg>${is_list} and len($value_found) &gt; 0</arg>
+<arg>${value_found[0]}</arg>
+<arg>${value_found}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.555730" elapsed="0.000043"/>
+</kw>
+<if>
+<branch type="IF" condition="not ${data}">
+<kw name="Replace" owner="resources_keywords">
+<var>${json_replace}</var>
+<arg>${json_data}</arg>
+<arg>${trim_value}</arg>
+<arg>${value_found}</arg>
+<status status="NOT RUN" start="2024-03-08T16:47:58.556543" elapsed="0.000094"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${data}</var>
+<arg>True</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.557146" elapsed="0.000100"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:58.555981" elapsed="0.001386"/>
+</branch>
+<branch type="ELSE">
+<kw name="Evaluate" owner="BuiltIn">
+<var>${converter_json}</var>
+<arg>json.loads("""${json_replace}""")</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.557748" elapsed="0.000034"/>
+</kw>
+<kw name="Replace" owner="resources_keywords">
+<var>${json_replace}</var>
+<arg>${converter_json}</arg>
+<arg>${trim_value}</arg>
+<arg>${value_found}</arg>
+<status status="NOT RUN" start="2024-03-08T16:47:58.558581" elapsed="0.000075"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:58.557452" elapsed="0.001299"/>
+</branch>
+<status status="NOT RUN" start="2024-03-08T16:47:58.555934" elapsed="0.002875"/>
+</if>
+<var name="${replace_val}"/>
+<status status="NOT RUN" start="2024-03-08T16:47:58.554352" elapsed="0.004530"/>
+</iter>
+<var>${replace_val}</var>
+<value>@{itens}</value>
+<status status="NOT RUN" start="2024-03-08T16:47:58.554003" elapsed="0.004941"/>
+</for>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${json_data}</var>
+<arg>${json_replace}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.559292" elapsed="0.000042"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${json_data}</var>
+<arg>json.loads("""${json_data}""")</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:58.559601" elapsed="0.000031"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:58.553282" elapsed="0.006422"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:58.553251" elapsed="0.006498"/>
+</if>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:58.560773" level="INFO">${body} = {'email': 'fulano@qa.com', 'password': 'teste'}</msg>
+<var>${body}</var>
+<arg>${json_data}</arg>
+<arg>body</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.559955" elapsed="0.000908"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:58.561998" level="INFO">${headers} = None</msg>
+<var>${headers}</var>
+<arg>${json_data}</arg>
+<arg>headers</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.561321" elapsed="0.000734"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:58.563281" level="INFO">${params} = None</msg>
+<var>${params}</var>
+<arg>${json_data}</arg>
+<arg>params</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.562381" elapsed="0.000975"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:58.564561" level="INFO">${method} = None</msg>
+<var>${method}</var>
+<arg>${json_data}</arg>
+<arg>method</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.563867" elapsed="0.000748"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-08T16:47:58.566046" level="FAIL">'../jsons/post_token' does not contain 'get'</msg>
+<arg>${json}</arg>
+<arg>get</arg>
+<arg>ignore_case=${True}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-08T16:47:58.565402" elapsed="0.000778">'../jsons/post_token' does not contain 'get'</status>
+</kw>
+<msg time="2024-03-08T16:47:58.566538" level="INFO">${name_file_get} = False</msg>
+<var>${name_file_get}</var>
+<arg>Should Contain</arg>
+<arg>${json}</arg>
+<arg>get</arg>
+<arg>ignore_case=${True}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.564957" elapsed="0.001641"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>post</arg>
+<arg>ignore_case=${True}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.569839" elapsed="0.000699"/>
+</kw>
+<msg time="2024-03-08T16:47:58.570819" level="INFO">${name_file_post} = True</msg>
+<var>${name_file_post}</var>
+<arg>Should Contain</arg>
+<arg>${json}</arg>
+<arg>post</arg>
+<arg>ignore_case=${True}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.569226" elapsed="0.001740"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>${log}</arg>
+<arg>Parse_JSON</arg>
+<arg>${json_data}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.571366" elapsed="0.000388"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Request_post" owner="keywords_requests">
+<kw name="Evaluate" owner="BuiltIn">
+<arg>urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)</arg>
+<arg>modules=urllib3</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.574054" elapsed="0.000449"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-03-08T16:47:58.575175" level="INFO">Creating Session using : alias=MySessionAlias, url=https://serverest.dev/login, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg time="2024-03-08T16:47:58.575617" level="INFO">${session_name} = &lt;requests.sessions.Session object at 0x1092e4250&gt;</msg>
+<var>${session_name}</var>
+<arg>alias=MySessionAlias</arg>
+<arg>url=${url}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-03-08T16:47:58.574796" elapsed="0.000866"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2024-03-08T16:47:59.212575" level="INFO">POST Request : url=https://serverest.dev/login 
+ path_url=/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '36', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=email=fulano%40qa.com&amp;password=teste 
+ </msg>
+<msg time="2024-03-08T16:47:59.212732" level="INFO">POST Response : url=https://serverest.dev/login 
+ status=200, reason=OK 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': 'a25c4b2ed5d3ac648195a2762b2e0814;o=1', 'Date': 'Fri, 08 Mar 2024 19:47:59 GMT', 'Server': 'Google Frontend', 'Content-Length': '265'} 
+ body={
+    "message": "Login realizado com sucesso",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5LCJleHAiOjE3MDk5Mjc4Nzl9.C4SWD3cKmxuXjORVd-vYZcBxYJPiWf_kWqAISt36Wjg"
+} 
+ </msg>
+<msg time="2024-03-08T16:47:59.213002" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>MySessionAlias</arg>
+<arg>url=</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>params=${params}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.575924" elapsed="0.637124"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>${log}</arg>
+<arg>Log Response JSON</arg>
+<arg>${response}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.213421" elapsed="0.000338"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2024-03-08T16:47:59.213868" elapsed="0.000062"/>
+</return>
+<arg>${url_endpoint}</arg>
+<arg>${body}</arg>
+<arg>${headers}</arg>
+<arg>${params}</arg>
+<arg>${log}</arg>
+<status status="PASS" start="2024-03-08T16:47:58.572768" elapsed="0.641489"/>
+</kw>
+<msg time="2024-03-08T16:47:59.214429" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${name_file_get}</arg>
+<arg>Request_get</arg>
+<arg>${url_endpoint}</arg>
+<arg>${log}</arg>
+<arg>ELSE IF</arg>
+<arg>${name_file_post}</arg>
+<arg>Request_post</arg>
+<arg>${url_endpoint}</arg>
+<arg>${body}</arg>
+<arg>${headers}</arg>
+<arg>${params}</arg>
+<arg>${log}</arg>
+<arg>ELSE IF</arg>
+<arg>'${method}' == 'GET'</arg>
+<arg>Request_get</arg>
+<arg>${url_endpoint}</arg>
+<arg>${log}</arg>
+<arg>ELSE IF</arg>
+<arg>'${method}' == 'POST'</arg>
+<arg>Request_post</arg>
+<arg>${url_endpoint}</arg>
+<arg>${body}</arg>
+<arg>${headers}</arg>
+<arg>${params}</arg>
+<arg>${log}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:58.572081" elapsed="0.642393"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-08T16:47:59.215605" level="INFO">False</msg>
+<arg>${json_data}</arg>
+<arg>status</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.215308" elapsed="0.000372"/>
+</kw>
+<msg time="2024-03-08T16:47:59.215837" level="INFO">${has_status} = True</msg>
+<var>${has_status}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json_data}</arg>
+<arg>status</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.214940" elapsed="0.000938"/>
+</kw>
+<if>
+<branch type="IF" condition="${has_status}">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.217327" level="INFO">${variable_name} = 200</msg>
+<var>${variable_name}</var>
+<arg>${json_data["status"]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.216347" elapsed="0.001024"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>${variable_name}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.217627" elapsed="0.000988"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n ✅ [̳ EXPECT ]̳ status equal ${response.status_code}\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.218854" elapsed="0.001000"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:59.216048" elapsed="0.003888"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.216002" elapsed="0.003990"/>
+</if>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-08T16:47:59.221028" level="INFO">False</msg>
+<msg time="2024-03-08T16:47:59.221178" level="FAIL">Dictionary does not contain key 'expect'.</msg>
+<arg>${json_data}</arg>
+<arg>expect</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="FAIL" start="2024-03-08T16:47:59.220666" elapsed="0.000640">Dictionary does not contain key 'expect'.</status>
+</kw>
+<msg time="2024-03-08T16:47:59.221514" level="INFO">${has_expect} = False</msg>
+<var>${has_expect}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json_data}</arg>
+<arg>expect</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.220279" elapsed="0.001277"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>${has_expect}</arg>
+<arg>Validate Expectations</arg>
+<arg>${response}</arg>
+<arg>${json_data['expect']}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.221901" elapsed="0.000253"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-08T16:47:59.223054" level="INFO">False</msg>
+<arg>${json_data}</arg>
+<arg>save</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.222726" elapsed="0.000404"/>
+</kw>
+<msg time="2024-03-08T16:47:59.223290" level="INFO">${has_save} = True</msg>
+<var>${has_save}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json_data}</arg>
+<arg>save</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.222412" elapsed="0.000918"/>
+</kw>
+<if>
+<branch type="IF" condition="${has_save}">
+<for flavor="IN">
+<iter>
+<kw name="Find In Json" owner="readJson">
+<msg time="2024-03-08T16:47:59.226641" level="INFO">${results} = ['Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5LCJleHAiOjE3MDk5Mjc4Nzl9.C4SWD3cKmxuXjORVd-vYZcBxYJPiWf_kWqAISt36Wjg']</msg>
+<var>${results}</var>
+<arg>${response.json()}</arg>
+<arg>${item['path']}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.224848" elapsed="0.001845"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.228703" level="INFO">${val} = token</msg>
+<var>${val}</var>
+<arg>${item.get('as', ${None})}</arg>
+<arg>${item.get('as', ${None})}</arg>
+<arg>${item['path']}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.227002" elapsed="0.001747"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Save" owner="resources_keywords">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.231235" level="INFO">${val} = token</msg>
+<var>${val}</var>
+<arg>'${as}' != '${None}'</arg>
+<arg>${as}</arg>
+<arg>${path}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.230725" elapsed="0.000567"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.238842" level="INFO">${is_list} = True</msg>
+<var>${is_list}</var>
+<arg>isinstance($values, list)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.231625" elapsed="0.007289"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.240636" level="INFO">${value_found} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5LCJleHAiOjE3MDk5Mjc4Nzl9.C4SWD3cKmxuXjORVd-vYZcBxYJPiWf_kWqAISt36Wjg</msg>
+<var>${value_found}</var>
+<arg>${is_list} and len($values) &gt; 0</arg>
+<arg>${values[0]}</arg>
+<arg>${values}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.239280" elapsed="0.001417"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.241568" level="INFO">${continuo_list} = False</msg>
+<var>${continuo_list}</var>
+<arg>isinstance($value_found, list)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.241033" elapsed="0.000588"/>
+</kw>
+<if>
+<branch type="IF" condition="${continuo_list}">
+<kw name="Set Variable" owner="BuiltIn">
+<var>${value_found}</var>
+<arg>${value_found[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.242148" elapsed="0.000040"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:59.241791" elapsed="0.000471"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.241752" elapsed="0.000560"/>
+</if>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.244507" level="INFO">@{token} = [ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5LCJleHAiOjE3MDk5Mjc4Nzl9.C4SWD3cKmxuXjORVd-vYZcBxYJPiWf_kWqAISt36Wjg ]</msg>
+<arg>@{${val}}</arg>
+<arg>${value_found}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.242554" elapsed="0.002195"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n 🔵 SAVED value for path: [ ${val} ] and value: ${value_found} \n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.245076" elapsed="0.000482"/>
+</kw>
+<arg>${val}</arg>
+<arg>${results}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.229815" elapsed="0.015863"/>
+</kw>
+<arg>len(${results}) &gt; 0</arg>
+<arg>Save</arg>
+<arg>${val}</arg>
+<arg>${results}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.229022" elapsed="0.016750"/>
+</kw>
+<var name="${item}">{'path': 'authorization', 'as': 'token'}</var>
+<status status="PASS" start="2024-03-08T16:47:59.224639" elapsed="0.021216"/>
+</iter>
+<var>${item}</var>
+<value>@{json_data['save']}</value>
+<status status="PASS" start="2024-03-08T16:47:59.223653" elapsed="0.022269"/>
+</for>
+<status status="PASS" start="2024-03-08T16:47:59.223491" elapsed="0.022498"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.223458" elapsed="0.022580"/>
+</if>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2024-03-08T16:47:59.246119" elapsed="0.000060"/>
+</return>
+<msg time="2024-03-08T16:47:59.246451" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>../jsons/post_token</arg>
+<status status="PASS" start="2024-03-08T16:47:58.521426" elapsed="0.725072"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:58.518755" elapsed="0.728034"/>
+</test>
+<test id="s1-s1-t2" name="Test - Generate new user" line="10">
+<kw name="Name" owner="FakerLibrary">
+<msg time="2024-03-08T16:47:59.248828" level="INFO">${name} = Jacqueline Brown</msg>
+<var>${name}</var>
+<doc>:example: 'John Doe'</doc>
+<status status="PASS" start="2024-03-08T16:47:59.247886" elapsed="0.001011"/>
+</kw>
+<kw name="Save" owner="resources_keywords">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.250746" level="INFO">${val} = faker_name</msg>
+<var>${val}</var>
+<arg>'${as}' != '${None}'</arg>
+<arg>${as}</arg>
+<arg>${path}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.250290" elapsed="0.000500"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.251435" level="INFO">${is_list} = False</msg>
+<var>${is_list}</var>
+<arg>isinstance($values, list)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.251025" elapsed="0.000450"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.252262" level="INFO">${value_found} = Jacqueline Brown</msg>
+<var>${value_found}</var>
+<arg>${is_list} and len($values) &gt; 0</arg>
+<arg>${values[0]}</arg>
+<arg>${values}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.251748" elapsed="0.000558"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.253032" level="INFO">${continuo_list} = False</msg>
+<var>${continuo_list}</var>
+<arg>isinstance($value_found, list)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.252573" elapsed="0.000511"/>
+</kw>
+<if>
+<branch type="IF" condition="${continuo_list}">
+<kw name="Set Variable" owner="BuiltIn">
+<var>${value_found}</var>
+<arg>${value_found[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.253636" elapsed="0.000041"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:59.253266" elapsed="0.000504"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.253216" elapsed="0.000607"/>
+</if>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.255999" level="INFO">@{faker_name} = [ Jacqueline Brown ]</msg>
+<arg>@{${val}}</arg>
+<arg>${value_found}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.254063" elapsed="0.002147"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n 🔵 SAVED value for path: [ ${val} ] and value: ${value_found} \n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.256988" elapsed="0.000548"/>
+</kw>
+<arg>faker_name</arg>
+<arg>${name}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.249487" elapsed="0.008200"/>
+</kw>
+<kw name="Email" owner="FakerLibrary">
+<msg time="2024-03-08T16:47:59.258653" level="INFO">${email} = christopher67@example.org</msg>
+<var>${email}</var>
+<status status="PASS" start="2024-03-08T16:47:59.258044" elapsed="0.000662"/>
+</kw>
+<kw name="Save" owner="resources_keywords">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.261037" level="INFO">${val} = faker_email</msg>
+<var>${val}</var>
+<arg>'${as}' != '${None}'</arg>
+<arg>${as}</arg>
+<arg>${path}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.260440" elapsed="0.000658"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.262012" level="INFO">${is_list} = False</msg>
+<var>${is_list}</var>
+<arg>isinstance($values, list)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.261435" elapsed="0.000634"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.263421" level="INFO">${value_found} = christopher67@example.org</msg>
+<var>${value_found}</var>
+<arg>${is_list} and len($values) &gt; 0</arg>
+<arg>${values[0]}</arg>
+<arg>${values}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.262486" elapsed="0.001005"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.264898" level="INFO">${continuo_list} = False</msg>
+<var>${continuo_list}</var>
+<arg>isinstance($value_found, list)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.264013" elapsed="0.000947"/>
+</kw>
+<if>
+<branch type="IF" condition="${continuo_list}">
+<kw name="Set Variable" owner="BuiltIn">
+<var>${value_found}</var>
+<arg>${value_found[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.265565" elapsed="0.000039"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:59.265164" elapsed="0.000512"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.265114" elapsed="0.000615"/>
+</if>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.267853" level="INFO">@{faker_email} = [ christopher67@example.org ]</msg>
+<arg>@{${val}}</arg>
+<arg>${value_found}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.265974" elapsed="0.001964"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n 🔵 SAVED value for path: [ ${val} ] and value: ${value_found} \n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.268184" elapsed="0.000426"/>
+</kw>
+<arg>faker_email</arg>
+<arg>${email}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.259264" elapsed="0.009485"/>
+</kw>
+<kw name="Request" owner="resources_keywords">
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Load JSON Data" owner="resources_keywords">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2024-03-08T16:47:59.273139" level="INFO" html="true">Getting file '&lt;a href="file:///Users/usuario/Documents/robot-framework/jsons/post_new_user.json"&gt;/Users/usuario/Documents/robot-framework/jsons/post_new_user.json&lt;/a&gt;'.</msg>
+<msg time="2024-03-08T16:47:59.273637" level="INFO">${json_content} = {
+	"status": 201,
+	"url": "serverest/usuarios",
+	"replace": "faker_name, faker_email, token",
+	"headers":{
+		"Authorization": "token"
+	},
+	"body":{
+		"nome": "faker_name",
+		"email": "faker_email",
+		...</msg>
+<var>${json_content}</var>
+<arg>${json_file_path}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.272699" elapsed="0.001150"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.275752" level="INFO">${json_data} = {'status': 201, 'url': 'serverest/usuarios', 'replace': 'faker_name, faker_email, token', 'headers': {'Authorization': 'token'}, 'body': {'nome': 'faker_name', 'email': 'faker_email', 'password': 'tes...</msg>
+<var>${json_data}</var>
+<arg>json.loads("""${json_content}""")</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.274434" elapsed="0.001451"/>
+</kw>
+<return>
+<value>${json_data}</value>
+<status status="PASS" start="2024-03-08T16:47:59.276179" elapsed="0.000160"/>
+</return>
+<arg>${json}.json</arg>
+<status status="PASS" start="2024-03-08T16:47:59.272039" elapsed="0.004696"/>
+</kw>
+<msg time="2024-03-08T16:47:59.277090" level="INFO">${json_data} = {'status': 201, 'url': 'serverest/usuarios', 'replace': 'faker_name, faker_email, token', 'headers': {'Authorization': 'token'}, 'body': {'nome': 'faker_name', 'email': 'faker_email', 'password': 'tes...</msg>
+<var>${json_data}</var>
+<arg>'${json.__class__.__name__}' == 'str'</arg>
+<arg>Load JSON Data</arg>
+<arg>${json}.json</arg>
+<arg>ELSE</arg>
+<arg>Set Variable</arg>
+<arg>${json}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.270874" elapsed="0.006298"/>
+</kw>
+<kw name="Process URL" owner="keywords_requests">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.281762" level="INFO">${final_url} = serverest/usuarios</msg>
+<var>${final_url}</var>
+<arg>${url}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.281299" elapsed="0.000528"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Not Start With" owner="BuiltIn">
+<arg>${url}</arg>
+<arg>http</arg>
+<doc>Fails if the string ``str1`` starts with the string ``str2``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.282590" elapsed="0.000325"/>
+</kw>
+<msg time="2024-03-08T16:47:59.283096" level="INFO">${protocol_not_http} = True</msg>
+<var>${protocol_not_http}</var>
+<arg>Should Not Start With</arg>
+<arg>${url}</arg>
+<arg>http</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.282139" elapsed="0.001000"/>
+</kw>
+<if>
+<branch type="IF" condition="${protocol_not_http}">
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${url}</arg>
+<arg>/</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.283913" elapsed="0.000262"/>
+</kw>
+<msg time="2024-03-08T16:47:59.284334" level="INFO">${contains_slash} = True</msg>
+<var>${contains_slash}</var>
+<arg>Should Contain</arg>
+<arg>${url}</arg>
+<arg>/</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.283613" elapsed="0.000761"/>
+</kw>
+<if>
+<branch type="IF" condition="${contains_slash}">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.285304" level="INFO">${parts} = ['serverest', 'usuarios']</msg>
+<var>${parts}</var>
+<arg>'${url}'.split('/')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.284811" elapsed="0.000546"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.286030" level="INFO">${endpoint} = serverest</msg>
+<var>${endpoint}</var>
+<arg>${parts}[0]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.285667" elapsed="0.000407"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.286903" level="INFO">${path} = usuarios</msg>
+<var>${path}</var>
+<arg>'/'.join(${parts}[1:])</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.286399" elapsed="0.000550"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:59.284515" elapsed="0.002515"/>
+</branch>
+<branch type="ELSE">
+<kw name="Set Variable" owner="BuiltIn">
+<var>${endpoint}</var>
+<arg>${url}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.287349" elapsed="0.000037"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${path}</var>
+<arg>${EMPTY}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.287615" elapsed="0.000032"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:59.287091" elapsed="0.000621"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.284487" elapsed="0.003267"/>
+</if>
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2024-03-08T16:47:59.288707" level="INFO" html="true">Getting file '&lt;a href="file:///Users/usuario/Documents/robot-framework/config/env.json"&gt;/Users/usuario/Documents/robot-framework/config/env.json&lt;/a&gt;'.</msg>
+<msg time="2024-03-08T16:47:59.289123" level="INFO">${file_content} = {
+	"env": "QA",
+	"QA": {
+	  "users": "https://reqres.in/api/users/2",
+	  "restcountries": "https://restcountries.com/v3.1/translation/germany",
+	  "users_base":"https://reqres.in/api/users",
+	  "serve...</msg>
+<var>${file_content}</var>
+<arg>${file_path}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.288109" elapsed="0.001066"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.290088" level="INFO">${json_data} = {'env': 'QA', 'QA': {'users': 'https://reqres.in/api/users/2', 'restcountries': 'https://restcountries.com/v3.1/translation/germany', 'users_base': 'https://reqres.in/api/users', 'serverest': 'https:/...</msg>
+<var>${json_data}</var>
+<arg>json.loads("""${file_content}""")</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.289497" elapsed="0.000646"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:59.291612" level="INFO">${env} = QA</msg>
+<var>${env}</var>
+<arg>${json_data}</arg>
+<arg>env</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.290741" elapsed="0.000935"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:59.292596" level="INFO">${env_data} = {'users': 'https://reqres.in/api/users/2', 'restcountries': 'https://restcountries.com/v3.1/translation/germany', 'users_base': 'https://reqres.in/api/users', 'serverest': 'https://serverest.dev', 'bo...</msg>
+<var>${env_data}</var>
+<arg>${json_data}</arg>
+<arg>${env}</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.292022" elapsed="0.000625"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:59.293428" level="INFO">${endpoint_value} = https://serverest.dev</msg>
+<var>${endpoint_value}</var>
+<arg>${env_data}</arg>
+<arg>${endpoint}</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.292937" elapsed="0.000536"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.294581" level="INFO">${final_endpoint} = https://serverest.dev</msg>
+<var>${final_endpoint}</var>
+<arg>'${endpoint_value}' != '${None}'</arg>
+<arg>${endpoint_value}</arg>
+<arg>${endpoint}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.293792" elapsed="0.001093"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.298666" level="INFO">${final_url} = https://serverest.dev/usuarios</msg>
+<var>${final_url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${final_endpoint}/${path}</arg>
+<arg>${final_endpoint}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.295416" elapsed="0.003420"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:59.283297" elapsed="0.015760"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.283262" elapsed="0.015912"/>
+</if>
+<return>
+<value>${final_url}</value>
+<status status="PASS" start="2024-03-08T16:47:59.299355" elapsed="0.000291"/>
+</return>
+<msg time="2024-03-08T16:47:59.300297" level="INFO">${url_endpoint} = https://serverest.dev/usuarios</msg>
+<var>${url_endpoint}</var>
+<arg>${json_data["url"]}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.278507" elapsed="0.021869"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-08T16:47:59.301810" level="INFO">False</msg>
+<msg time="2024-03-08T16:47:59.301999" level="FAIL">Dictionary does not contain key 'path'.</msg>
+<arg>${json_data}</arg>
+<arg>path</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="FAIL" start="2024-03-08T16:47:59.301081" elapsed="0.001046">Dictionary does not contain key 'path'.</status>
+</kw>
+<msg time="2024-03-08T16:47:59.302363" level="INFO">${path_string} = False</msg>
+<var>${path_string}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json_data}</arg>
+<arg>path</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.300726" elapsed="0.001684"/>
+</kw>
+<if>
+<branch type="IF" condition="${path_string}">
+<kw name="Set Variable" owner="BuiltIn">
+<var>${variable_name}</var>
+<arg>${json_data["path"]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.303034" elapsed="0.000052"/>
+</kw>
+<kw name="Get Variable Value" owner="BuiltIn">
+<var>${value_found}</var>
+<arg>${${variable_name}}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.303387" elapsed="0.000039"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${url_endpoint}</var>
+<arg>${url_endpoint}/${value_found[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.303671" elapsed="0.000034"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:59.302603" elapsed="0.001171"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.302560" elapsed="0.001270"/>
+</if>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n\n 🔰 request in: ${url_endpoint}\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.304050" elapsed="0.000503"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-08T16:47:59.306143" level="INFO">False</msg>
+<arg>${json_data}</arg>
+<arg>replace</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.305398" elapsed="0.000856"/>
+</kw>
+<msg time="2024-03-08T16:47:59.306521" level="INFO">${path_replace} = True</msg>
+<var>${path_replace}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json_data}</arg>
+<arg>replace</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.304858" elapsed="0.001713"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.307198" level="INFO">${data} = False</msg>
+<var>${data}</var>
+<arg>False</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.306896" elapsed="0.000345"/>
+</kw>
+<if>
+<branch type="IF" condition="${path_replace}">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.308923" level="INFO">${path_value_replace} = faker_name, faker_email, token</msg>
+<var>${path_value_replace}</var>
+<arg>${json_data['replace']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.307777" elapsed="0.001200"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2024-03-08T16:47:59.309625" level="INFO">${itens} = ['faker_name', ' faker_email', ' token']</msg>
+<var>${itens}</var>
+<arg>${path_value_replace}</arg>
+<arg>,</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.309286" elapsed="0.000381"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2024-03-08T16:47:59.310733" level="INFO">${trim_value} = faker_name</msg>
+<var>${trim_value}</var>
+<arg>${replace_val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.310437" elapsed="0.000339"/>
+</kw>
+<kw name="Get Variable Value" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.311536" level="INFO">@{value_found} = [ Jacqueline Brown ]</msg>
+<var>@{value_found}</var>
+<arg>${${trim_value}}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.311017" elapsed="0.000559"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.312463" level="INFO">${value_found} = Jacqueline Brown</msg>
+<var>${value_found}</var>
+<arg>$value_found[0] if isinstance($value_found, list) and len($value_found) &gt; 0 else $value_found</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.311794" elapsed="0.000713"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.314124" level="INFO">${is_list} = False</msg>
+<var>${is_list}</var>
+<arg>isinstance($value_found, list)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.312816" elapsed="0.001466"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.316307" level="INFO">${value_found} = Jacqueline Brown</msg>
+<var>${value_found}</var>
+<arg>${is_list} and len($value_found) &gt; 0</arg>
+<arg>${value_found[0]}</arg>
+<arg>${value_found}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.314906" elapsed="0.001516"/>
+</kw>
+<if>
+<branch type="IF" condition="not ${data}">
+<kw name="Replace" owner="resources_keywords">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.319432" level="INFO">${json_type} = dict</msg>
+<var>${json_type}</var>
+<arg>$json.__class__.__name__</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.318726" elapsed="0.000771"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Converter JSON str" owner="resources_keywords">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.321771" level="INFO">${json_data} = {"status": 201, "url": "serverest/usuarios", "replace": "faker_name, faker_email, token", "headers": {"Authorization": "token"}, "body": {"nome": "faker_name", "email": "faker_email", "password": "tes...</msg>
+<var>${json_data}</var>
+<arg>json.dumps($json)</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.321201" elapsed="0.000623"/>
+</kw>
+<kw name="Replace In String" owner="resources_keywords">
+<kw name="Replace String" owner="String">
+<msg time="2024-03-08T16:47:59.324404" level="INFO">${replaced} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, faker_email, token", "headers": {"Authorization": "token"}, "body": {"nome": "Jacqueline Brown", "email": "faker_email", "pas...</msg>
+<var>${replaced}</var>
+<arg>${json_str}</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.323784" elapsed="0.000682"/>
+</kw>
+<return>
+<value>${replaced}</value>
+<status status="PASS" start="2024-03-08T16:47:59.324647" elapsed="0.000080"/>
+</return>
+<msg time="2024-03-08T16:47:59.325148" level="INFO">${replaced} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, faker_email, token", "headers": {"Authorization": "token"}, "body": {"nome": "Jacqueline Brown", "email": "faker_email", "pas...</msg>
+<var>${replaced}</var>
+<arg>${json_data}</arg>
+<arg>${key}</arg>
+<arg>${new_value}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.322319" elapsed="0.002914"/>
+</kw>
+<return>
+<value>${replaced}</value>
+<status status="PASS" start="2024-03-08T16:47:59.325476" elapsed="0.000118"/>
+</return>
+<arg>${json}</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.320408" elapsed="0.005639"/>
+</kw>
+<msg time="2024-03-08T16:47:59.326410" level="INFO">${replaced} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, faker_email, token", "headers": {"Authorization": "token"}, "body": {"nome": "Jacqueline Brown", "email": "faker_email", "pas...</msg>
+<var>${replaced}</var>
+<arg>'${json_type}' == 'str'</arg>
+<arg>Transfor_DATA</arg>
+<arg>${json}.json</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<arg>ELSE</arg>
+<arg>Converter JSON str</arg>
+<arg>${json}</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.319853" elapsed="0.006641"/>
+</kw>
+<return>
+<value>${replaced}</value>
+<status status="PASS" start="2024-03-08T16:47:59.326756" elapsed="0.000120"/>
+</return>
+<msg time="2024-03-08T16:47:59.327634" level="INFO">${json_replace} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, faker_email, token", "headers": {"Authorization": "token"}, "body": {"nome": "Jacqueline Brown", "email": "faker_email", "pas...</msg>
+<var>${json_replace}</var>
+<arg>${json_data}</arg>
+<arg>${trim_value}</arg>
+<arg>${value_found}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.317356" elapsed="0.010420"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.329240" level="INFO">${data} = True</msg>
+<var>${data}</var>
+<arg>True</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.328508" elapsed="0.000831"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:59.316758" elapsed="0.012690"/>
+</branch>
+<branch type="ELSE">
+<kw name="Evaluate" owner="BuiltIn">
+<var>${converter_json}</var>
+<arg>json.loads("""${json_replace}""")</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.330222" elapsed="0.000068"/>
+</kw>
+<kw name="Replace" owner="resources_keywords">
+<var>${json_replace}</var>
+<arg>${converter_json}</arg>
+<arg>${trim_value}</arg>
+<arg>${value_found}</arg>
+<status status="NOT RUN" start="2024-03-08T16:47:59.330969" elapsed="0.000072"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:59.329652" elapsed="0.001492"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.316689" elapsed="0.014505"/>
+</if>
+<var name="${replace_val}">faker_name</var>
+<status status="PASS" start="2024-03-08T16:47:59.310228" elapsed="0.021028"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2024-03-08T16:47:59.332387" level="INFO">${trim_value} = faker_email</msg>
+<var>${trim_value}</var>
+<arg>${replace_val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.331972" elapsed="0.000477"/>
+</kw>
+<kw name="Get Variable Value" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.333330" level="INFO">@{value_found} = [ christopher67@example.org ]</msg>
+<var>@{value_found}</var>
+<arg>${${trim_value}}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.332739" elapsed="0.000632"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.335010" level="INFO">${value_found} = christopher67@example.org</msg>
+<var>${value_found}</var>
+<arg>$value_found[0] if isinstance($value_found, list) and len($value_found) &gt; 0 else $value_found</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.333591" elapsed="0.001532"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.336191" level="INFO">${is_list} = False</msg>
+<var>${is_list}</var>
+<arg>isinstance($value_found, list)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.335525" elapsed="0.000721"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.337164" level="INFO">${value_found} = christopher67@example.org</msg>
+<var>${value_found}</var>
+<arg>${is_list} and len($value_found) &gt; 0</arg>
+<arg>${value_found[0]}</arg>
+<arg>${value_found}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.336581" elapsed="0.000630"/>
+</kw>
+<if>
+<branch type="IF" condition="not ${data}">
+<kw name="Replace" owner="resources_keywords">
+<var>${json_replace}</var>
+<arg>${json_data}</arg>
+<arg>${trim_value}</arg>
+<arg>${value_found}</arg>
+<status status="NOT RUN" start="2024-03-08T16:47:59.337807" elapsed="0.000045"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${data}</var>
+<arg>True</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.338101" elapsed="0.000033"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:59.337381" elapsed="0.000820"/>
+</branch>
+<branch type="ELSE">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.338982" level="INFO">${converter_json} = {'status': 201, 'url': 'serverest/usuarios', 'replace': 'Jacqueline Brown, faker_email, token', 'headers': {'Authorization': 'token'}, 'body': {'nome': 'Jacqueline Brown', 'email': 'faker_email', 'pas...</msg>
+<var>${converter_json}</var>
+<arg>json.loads("""${json_replace}""")</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.338454" elapsed="0.000580"/>
+</kw>
+<kw name="Replace" owner="resources_keywords">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.340944" level="INFO">${json_type} = dict</msg>
+<var>${json_type}</var>
+<arg>$json.__class__.__name__</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.340259" elapsed="0.000748"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Converter JSON str" owner="resources_keywords">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.344348" level="INFO">${json_data} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, faker_email, token", "headers": {"Authorization": "token"}, "body": {"nome": "Jacqueline Brown", "email": "faker_email", "pas...</msg>
+<var>${json_data}</var>
+<arg>json.dumps($json)</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.343413" elapsed="0.001029"/>
+</kw>
+<kw name="Replace In String" owner="resources_keywords">
+<kw name="Replace String" owner="String">
+<msg time="2024-03-08T16:47:59.346630" level="INFO">${replaced} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, christopher67@example.org, token", "headers": {"Authorization": "token"}, "body": {"nome": "Jacqueline Brown", "email": "chri...</msg>
+<var>${replaced}</var>
+<arg>${json_str}</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.346162" elapsed="0.000557"/>
+</kw>
+<return>
+<value>${replaced}</value>
+<status status="PASS" start="2024-03-08T16:47:59.346863" elapsed="0.000075"/>
+</return>
+<msg time="2024-03-08T16:47:59.347222" level="INFO">${replaced} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, christopher67@example.org, token", "headers": {"Authorization": "token"}, "body": {"nome": "Jacqueline Brown", "email": "chri...</msg>
+<var>${replaced}</var>
+<arg>${json_data}</arg>
+<arg>${key}</arg>
+<arg>${new_value}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.344973" elapsed="0.002295"/>
+</kw>
+<return>
+<value>${replaced}</value>
+<status status="PASS" start="2024-03-08T16:47:59.347381" elapsed="0.000062"/>
+</return>
+<arg>${json}</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.342277" elapsed="0.005353"/>
+</kw>
+<msg time="2024-03-08T16:47:59.347824" level="INFO">${replaced} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, christopher67@example.org, token", "headers": {"Authorization": "token"}, "body": {"nome": "Jacqueline Brown", "email": "chri...</msg>
+<var>${replaced}</var>
+<arg>'${json_type}' == 'str'</arg>
+<arg>Transfor_DATA</arg>
+<arg>${json}.json</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<arg>ELSE</arg>
+<arg>Converter JSON str</arg>
+<arg>${json}</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.341437" elapsed="0.006449"/>
+</kw>
+<return>
+<value>${replaced}</value>
+<status status="PASS" start="2024-03-08T16:47:59.348116" elapsed="0.000059"/>
+</return>
+<msg time="2024-03-08T16:47:59.348447" level="INFO">${json_replace} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, christopher67@example.org, token", "headers": {"Authorization": "token"}, "body": {"nome": "Jacqueline Brown", "email": "chri...</msg>
+<var>${json_replace}</var>
+<arg>${converter_json}</arg>
+<arg>${trim_value}</arg>
+<arg>${value_found}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.339373" elapsed="0.009120"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:59.338249" elapsed="0.010323"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.337346" elapsed="0.011273"/>
+</if>
+<var name="${replace_val}"> faker_email</var>
+<status status="PASS" start="2024-03-08T16:47:59.331713" elapsed="0.016958"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2024-03-08T16:47:59.349681" level="INFO">${trim_value} = token</msg>
+<var>${trim_value}</var>
+<arg>${replace_val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.349304" elapsed="0.000420"/>
+</kw>
+<kw name="Get Variable Value" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.350603" level="INFO">@{value_found} = [ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5LCJleHAiOjE3MDk5Mjc4Nzl9.C4SWD3cKmxuXjORVd-vYZcBxYJPiWf_kWqAISt36Wjg ]</msg>
+<var>@{value_found}</var>
+<arg>${${trim_value}}</arg>
+<doc>Returns variable value or ``default`` if the variable does not exist.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.350038" elapsed="0.000641"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.352411" level="INFO">${value_found} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5LCJleHAiOjE3MDk5Mjc4Nzl9.C4SWD3cKmxuXjORVd-vYZcBxYJPiWf_kWqAISt36Wjg</msg>
+<var>${value_found}</var>
+<arg>$value_found[0] if isinstance($value_found, list) and len($value_found) &gt; 0 else $value_found</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.351159" elapsed="0.001379"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.354013" level="INFO">${is_list} = False</msg>
+<var>${is_list}</var>
+<arg>isinstance($value_found, list)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.353237" elapsed="0.000833"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.355013" level="INFO">${value_found} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5LCJleHAiOjE3MDk5Mjc4Nzl9.C4SWD3cKmxuXjORVd-vYZcBxYJPiWf_kWqAISt36Wjg</msg>
+<var>${value_found}</var>
+<arg>${is_list} and len($value_found) &gt; 0</arg>
+<arg>${value_found[0]}</arg>
+<arg>${value_found}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.354387" elapsed="0.000672"/>
+</kw>
+<if>
+<branch type="IF" condition="not ${data}">
+<kw name="Replace" owner="resources_keywords">
+<var>${json_replace}</var>
+<arg>${json_data}</arg>
+<arg>${trim_value}</arg>
+<arg>${value_found}</arg>
+<status status="NOT RUN" start="2024-03-08T16:47:59.355689" elapsed="0.000047"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${data}</var>
+<arg>True</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-03-08T16:47:59.356035" elapsed="0.000126"/>
+</kw>
+<status status="NOT RUN" start="2024-03-08T16:47:59.355224" elapsed="0.001074"/>
+</branch>
+<branch type="ELSE">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.357535" level="INFO">${converter_json} = {'status': 201, 'url': 'serverest/usuarios', 'replace': 'Jacqueline Brown, christopher67@example.org, token', 'headers': {'Authorization': 'token'}, 'body': {'nome': 'Jacqueline Brown', 'email': 'chri...</msg>
+<var>${converter_json}</var>
+<arg>json.loads("""${json_replace}""")</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.356844" elapsed="0.000750"/>
+</kw>
+<kw name="Replace" owner="resources_keywords">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.359504" level="INFO">${json_type} = dict</msg>
+<var>${json_type}</var>
+<arg>$json.__class__.__name__</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.358814" elapsed="0.000796"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Converter JSON str" owner="resources_keywords">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.366690" level="INFO">${json_data} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, christopher67@example.org, token", "headers": {"Authorization": "token"}, "body": {"nome": "Jacqueline Brown", "email": "chri...</msg>
+<var>${json_data}</var>
+<arg>json.dumps($json)</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.366065" elapsed="0.000681"/>
+</kw>
+<kw name="Replace In String" owner="resources_keywords">
+<kw name="Replace String" owner="String">
+<msg time="2024-03-08T16:47:59.369734" level="INFO">${replaced} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, christopher67@example.org, Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3...</msg>
+<var>${replaced}</var>
+<arg>${json_str}</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.369148" elapsed="0.000655"/>
+</kw>
+<return>
+<value>${replaced}</value>
+<status status="PASS" start="2024-03-08T16:47:59.370172" elapsed="0.000068"/>
+</return>
+<msg time="2024-03-08T16:47:59.370934" level="INFO">${replaced} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, christopher67@example.org, Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3...</msg>
+<var>${replaced}</var>
+<arg>${json_data}</arg>
+<arg>${key}</arg>
+<arg>${new_value}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.367437" elapsed="0.003560"/>
+</kw>
+<return>
+<value>${replaced}</value>
+<status status="PASS" start="2024-03-08T16:47:59.371141" elapsed="0.000087"/>
+</return>
+<arg>${json}</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.365140" elapsed="0.006347"/>
+</kw>
+<msg time="2024-03-08T16:47:59.371689" level="INFO">${replaced} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, christopher67@example.org, Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3...</msg>
+<var>${replaced}</var>
+<arg>'${json_type}' == 'str'</arg>
+<arg>Transfor_DATA</arg>
+<arg>${json}.json</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<arg>ELSE</arg>
+<arg>Converter JSON str</arg>
+<arg>${json}</arg>
+<arg>${string}</arg>
+<arg>${replace_with}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.360737" elapsed="0.011001"/>
+</kw>
+<return>
+<value>${replaced}</value>
+<status status="PASS" start="2024-03-08T16:47:59.371914" elapsed="0.000057"/>
+</return>
+<msg time="2024-03-08T16:47:59.372248" level="INFO">${json_replace} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, christopher67@example.org, Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3...</msg>
+<var>${json_replace}</var>
+<arg>${converter_json}</arg>
+<arg>${trim_value}</arg>
+<arg>${value_found}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.357989" elapsed="0.014341"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:59.356359" elapsed="0.016129"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.355188" elapsed="0.017353"/>
+</if>
+<var name="${replace_val}"> token</var>
+<status status="PASS" start="2024-03-08T16:47:59.349058" elapsed="0.023595"/>
+</iter>
+<var>${replace_val}</var>
+<value>@{itens}</value>
+<status status="PASS" start="2024-03-08T16:47:59.309783" elapsed="0.062948"/>
+</for>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.373467" level="INFO">${json_data} = {"status": 201, "url": "serverest/usuarios", "replace": "Jacqueline Brown, christopher67@example.org, Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3...</msg>
+<var>${json_data}</var>
+<arg>${json_replace}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.373067" elapsed="0.000445"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.374466" level="INFO">${json_data} = {'status': 201, 'url': 'serverest/usuarios', 'replace': 'Jacqueline Brown, christopher67@example.org, Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3...</msg>
+<var>${json_data}</var>
+<arg>json.loads("""${json_data}""")</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.373800" elapsed="0.000716"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:59.307392" elapsed="0.067238"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:47:59.307356" elapsed="0.067339"/>
+</if>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:59.375983" level="INFO">${body} = {'nome': 'Jacqueline Brown', 'email': 'christopher67@example.org', 'password': 'teste', 'administrador': 'true'}</msg>
+<var>${body}</var>
+<arg>${json_data}</arg>
+<arg>body</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.375248" elapsed="0.000787"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:59.377024" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5LCJleHAiOjE3MDk5Mjc4Nzl9.C4SWD3cKmxuXjORVd-vYZcBxYJPiWf_k...</msg>
+<var>${headers}</var>
+<arg>${json_data}</arg>
+<arg>headers</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.376467" elapsed="0.000612"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:59.378046" level="INFO">${params} = None</msg>
+<var>${params}</var>
+<arg>${json_data}</arg>
+<arg>params</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.377383" elapsed="0.000711"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:59.379188" level="INFO">${method} = None</msg>
+<var>${method}</var>
+<arg>${json_data}</arg>
+<arg>method</arg>
+<arg>${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.378383" elapsed="0.000869"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.380784" level="FAIL">'../jsons/post_new_user' does not contain 'get'</msg>
+<arg>${json}</arg>
+<arg>get</arg>
+<arg>ignore_case=${True}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-03-08T16:47:59.380116" elapsed="0.000799">'../jsons/post_new_user' does not contain 'get'</status>
+</kw>
+<msg time="2024-03-08T16:47:59.381123" level="INFO">${name_file_get} = False</msg>
+<var>${name_file_get}</var>
+<arg>Should Contain</arg>
+<arg>${json}</arg>
+<arg>get</arg>
+<arg>ignore_case=${True}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.379706" elapsed="0.001458"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>post</arg>
+<arg>ignore_case=${True}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.381820" elapsed="0.000418"/>
+</kw>
+<msg time="2024-03-08T16:47:59.382401" level="INFO">${name_file_post} = True</msg>
+<var>${name_file_post}</var>
+<arg>Should Contain</arg>
+<arg>${json}</arg>
+<arg>post</arg>
+<arg>ignore_case=${True}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.381494" elapsed="0.000947"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Parse_JSON" owner="resources_keywords">
+<kw name="Remove From Dictionary" owner="Collections">
+<msg time="2024-03-08T16:47:59.384856" level="INFO">Removed item with key 'replace' and value 'Jacqueline Brown, christopher67@example.org, Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5LCJleHAiOjE3MDk5Mjc4Nzl9.C4SWD3cKmxuXjORVd-vYZcBxYJPiWf_kWqAISt36Wjg'.</msg>
+<arg>${json}</arg>
+<arg>replace</arg>
+<doc>Removes the given ``keys`` from the ``dictionary``.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.384436" elapsed="0.000522"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.385551" level="INFO">${val} = {'status': 201, 'url': 'serverest/usuarios', 'headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5L...</msg>
+<var>${val}</var>
+<arg>${json}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.385237" elapsed="0.000486"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:47:59.387815" level="INFO">${json_data} = {
+    "status": 201,
+    "url": "serverest/usuarios",
+    "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiw...</msg>
+<var>${json_data}</var>
+<arg>json.dumps(${val}, indent=4)</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.386124" elapsed="0.001763"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Payload: ${json_data}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.388235" elapsed="0.000402"/>
+</kw>
+<arg>${json_data}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.383722" elapsed="0.005041"/>
+</kw>
+<arg>${log}</arg>
+<arg>Parse_JSON</arg>
+<arg>${json_data}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.382779" elapsed="0.006248"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Request_post" owner="keywords_requests">
+<kw name="Evaluate" owner="BuiltIn">
+<arg>urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)</arg>
+<arg>modules=urllib3</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.391556" elapsed="0.000346"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-03-08T16:47:59.392489" level="INFO">Creating Session using : alias=MySessionAlias, url=https://serverest.dev/usuarios, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg time="2024-03-08T16:47:59.392839" level="INFO">${session_name} = &lt;requests.sessions.Session object at 0x1093e3ac0&gt;</msg>
+<var>${session_name}</var>
+<arg>alias=MySessionAlias</arg>
+<arg>url=${url}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-03-08T16:47:59.392149" elapsed="0.000735"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2024-03-08T16:48:00.035842" level="INFO">POST Request : url=https://serverest.dev/usuarios 
+ path_url=/usuarios 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzA5OTI3Mjc5LCJleHAiOjE3MDk5Mjc4Nzl9.C4SWD3cKmxuXjORVd-vYZcBxYJPiWf_kWqAISt36Wjg', 'Content-Length': '89', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=nome=Jacqueline+Brown&amp;email=christopher67%40example.org&amp;password=teste&amp;administrador=true 
+ </msg>
+<msg time="2024-03-08T16:48:00.036001" level="INFO">POST Response : url=https://serverest.dev/usuarios 
+ status=201, reason=Created 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': '88beed750ddbd74bf63b6e681ce35893', 'Date': 'Fri, 08 Mar 2024 19:47:59 GMT', 'Server': 'Google Frontend', 'Content-Length': '82'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "FDGBgS1KGA5VjFho"
+} 
+ </msg>
+<msg time="2024-03-08T16:48:00.036210" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>MySessionAlias</arg>
+<arg>url=</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>params=${params}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.393124" elapsed="0.643134"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Log Response JSON" owner="keywords_requests">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:48:00.039252" level="INFO">${response_body} = {'message': 'Cadastro realizado com sucesso', '_id': 'FDGBgS1KGA5VjFho'}</msg>
+<var>${response_body}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.038200" elapsed="0.001105"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-03-08T16:48:00.040225" level="INFO">${formatted_json} = {
+    "message": "Cadastro realizado com sucesso",
+    "_id": "FDGBgS1KGA5VjFho"
+}</msg>
+<var>${formatted_json}</var>
+<arg>json.dumps($response_body, indent=4)</arg>
+<arg>modules=json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.039597" elapsed="0.000675"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n${formatted_json}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.040515" elapsed="0.000333"/>
+</kw>
+<arg>${response}</arg>
+<status status="PASS" start="2024-03-08T16:48:00.037252" elapsed="0.003714"/>
+</kw>
+<arg>${log}</arg>
+<arg>Log Response JSON</arg>
+<arg>${response}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.036647" elapsed="0.004404"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2024-03-08T16:48:00.041166" elapsed="0.000058"/>
+</return>
+<arg>${url_endpoint}</arg>
+<arg>${body}</arg>
+<arg>${headers}</arg>
+<arg>${params}</arg>
+<arg>${log}</arg>
+<status status="PASS" start="2024-03-08T16:47:59.390647" elapsed="0.650776"/>
+</kw>
+<msg time="2024-03-08T16:48:00.041593" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${name_file_get}</arg>
+<arg>Request_get</arg>
+<arg>${url_endpoint}</arg>
+<arg>${log}</arg>
+<arg>ELSE IF</arg>
+<arg>${name_file_post}</arg>
+<arg>Request_post</arg>
+<arg>${url_endpoint}</arg>
+<arg>${body}</arg>
+<arg>${headers}</arg>
+<arg>${params}</arg>
+<arg>${log}</arg>
+<arg>ELSE IF</arg>
+<arg>'${method}' == 'GET'</arg>
+<arg>Request_get</arg>
+<arg>${url_endpoint}</arg>
+<arg>${log}</arg>
+<arg>ELSE IF</arg>
+<arg>'${method}' == 'POST'</arg>
+<arg>Request_post</arg>
+<arg>${url_endpoint}</arg>
+<arg>${body}</arg>
+<arg>${headers}</arg>
+<arg>${params}</arg>
+<arg>${log}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:47:59.389872" elapsed="0.651767"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-08T16:48:00.042669" level="INFO">False</msg>
+<arg>${json_data}</arg>
+<arg>status</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.042392" elapsed="0.000348"/>
+</kw>
+<msg time="2024-03-08T16:48:00.042893" level="INFO">${has_status} = True</msg>
+<var>${has_status}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json_data}</arg>
+<arg>status</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.042064" elapsed="0.000869"/>
+</kw>
+<if>
+<branch type="IF" condition="${has_status}">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-03-08T16:48:00.045337" level="INFO">${variable_name} = 201</msg>
+<var>${variable_name}</var>
+<arg>${json_data["status"]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.043522" elapsed="0.001964"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>${variable_name}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.046096" elapsed="0.001979"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n ✅ [̳ EXPECT ]̳ status equal ${response.status_code}\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.048997" elapsed="0.001832"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:48:00.043091" elapsed="0.007857"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:48:00.043055" elapsed="0.007957"/>
+</if>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-08T16:48:00.052153" level="INFO">False</msg>
+<msg time="2024-03-08T16:48:00.052305" level="FAIL">Dictionary does not contain key 'expect'.</msg>
+<arg>${json_data}</arg>
+<arg>expect</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="FAIL" start="2024-03-08T16:48:00.051746" elapsed="0.000685">Dictionary does not contain key 'expect'.</status>
+</kw>
+<msg time="2024-03-08T16:48:00.052639" level="INFO">${has_expect} = False</msg>
+<var>${has_expect}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json_data}</arg>
+<arg>expect</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.051362" elapsed="0.001334"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>${has_expect}</arg>
+<arg>Validate Expectations</arg>
+<arg>${response}</arg>
+<arg>${json_data['expect']}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.053018" elapsed="0.000277"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-03-08T16:48:00.054185" level="INFO">False</msg>
+<msg time="2024-03-08T16:48:00.054329" level="FAIL">Dictionary does not contain key 'save'.</msg>
+<arg>${json_data}</arg>
+<arg>save</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="FAIL" start="2024-03-08T16:48:00.053903" elapsed="0.000536">Dictionary does not contain key 'save'.</status>
+</kw>
+<msg time="2024-03-08T16:48:00.054618" level="INFO">${has_save} = False</msg>
+<var>${has_save}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json_data}</arg>
+<arg>save</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-03-08T16:48:00.053594" elapsed="0.001065"/>
+</kw>
+<if>
+<branch type="IF" condition="${has_save}">
+<for flavor="IN">
+<iter>
+<kw name="Find In Json" owner="readJson">
+<var>${results}</var>
+<arg>${response.json()}</arg>
+<arg>${item['path']}</arg>
+<status status="NOT RUN" start="2024-03-08T16:48:00.055444" elapsed="0.000046"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<var>${val}</var>
+<arg>${item.get('as', ${None})}</arg>
+<arg>${item.get('as', ${None})}</arg>
+<arg>${item['path']}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="NOT RUN" start="2024-03-08T16:48:00.055773" elapsed="0.000038"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>len(${results}) &gt; 0</arg>
+<arg>Save</arg>
+<arg>${val}</arg>
+<arg>${results}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" start="2024-03-08T16:48:00.056067" elapsed="0.000033"/>
+</kw>
+<var name="${item}"/>
+<status status="NOT RUN" start="2024-03-08T16:48:00.055121" elapsed="0.001062"/>
+</iter>
+<var>${item}</var>
+<value>@{json_data['save']}</value>
+<status status="NOT RUN" start="2024-03-08T16:48:00.054982" elapsed="0.001258"/>
+</for>
+<status status="NOT RUN" start="2024-03-08T16:48:00.054816" elapsed="0.001492"/>
+</branch>
+<status status="PASS" start="2024-03-08T16:48:00.054782" elapsed="0.001660"/>
+</if>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2024-03-08T16:48:00.056563" elapsed="0.000064"/>
+</return>
+<msg time="2024-03-08T16:48:00.057069" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>../jsons/post_new_user</arg>
+<arg>True</arg>
+<status status="PASS" start="2024-03-08T16:47:59.270159" elapsed="0.786973"/>
+</kw>
+<status status="PASS" start="2024-03-08T16:47:59.247189" elapsed="0.810271"/>
+</test>
+<status status="PASS" start="2024-03-08T16:47:57.710441" elapsed="2.347810"/>
+</suite>
+<status status="PASS" start="2024-03-08T16:47:57.670652" elapsed="2.388711"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="0" skip="0" id="s1" name="Tests">Tests</stat>
+<stat pass="2" fail="0" skip="0" id="s1-s1" name="Requests">Tests.Requests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

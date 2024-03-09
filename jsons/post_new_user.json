@@ -1,0 +1,14 @@
+{
+	"status": 201,
+	"url": "serverest/usuarios",
+	"replace": "faker_name, faker_email, token",
+	"headers":{
+		"Authorization": "token"
+	},
+	"body":{
+		"nome": "faker_name",
+		"email": "faker_email",
+		"password": "teste",
+		"administrador": "true"
+	  }
+}
