@@ -4,10 +4,10 @@ Library    FakerLibrary    locale=pt_BR
 *** Variables ***
 
 *** Test Cases ***
-Test init
+Test - generate new token and save
     ${response}    Request    ../jsons/post_token
 
-Test - Generate new users
+Test - Generate new users testing using replace function
     ${name}    FakerLibrary.Name
     Save    faker_name    ${name}
     ${email}    FakerLibrary.Email
