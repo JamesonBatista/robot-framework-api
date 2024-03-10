@@ -1,0 +1,5 @@
+{
+	"status": 200,
+	"url": "restcountries",
+	"expect": [{"path": "common"}, {"path": "population"}, {"path": "continents"}]
+}
