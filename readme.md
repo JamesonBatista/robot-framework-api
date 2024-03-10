@@ -173,8 +173,9 @@ Test - Construct request
  > *Get value variable that was saved*
  - ### _.variable_ 
  ```py
-	Save    faker_name    ${name}
- 	${rescue_value}=    GET_VARIABLE_GLOBAL    faker_name
+ Test - Save and rescue save
+    Save    faker_name    ${name}
+    ${rescue_value}=    GET_VARIABLE_GLOBAL    faker_name
  ```
  ---
 
@@ -189,8 +190,10 @@ Test - Construct request
 > *For validate status code outside JSON*
   - ### _.status_
 ```py
-	${response}    Request    ${json}    True
-	STATUS_CODE    ${response}    status    200
+ Test - request and status
+
+      ${response}    Request    ${json}    True
+      STATUS_CODE    ${response}    status    200
 ```
 ---
 
